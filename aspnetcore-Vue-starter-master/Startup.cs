@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,8 +8,9 @@ using Microsoft.AspNetCore.SpaServices.Webpack;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Vue2Do.Services;
 
-namespace Vue2Spa
+namespace Vue2Do
 {
     public class Startup
     {
@@ -30,6 +31,8 @@ namespace Vue2Spa
         {
             // Add framework services.
             services.AddMvc();
+
+            services.AddSingleton<IToDoItemService, ToDoItemService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
