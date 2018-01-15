@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@okta/okta-auth-js": "^1.11.0",
+    "@okta/okta-vue": "0.0.3",
     "axios": "^0.15.3",
     "core-js": "^2.4.1",
     "cors": "^2.8.4",
