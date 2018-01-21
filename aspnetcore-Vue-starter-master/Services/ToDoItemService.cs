@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,20 +9,28 @@ namespace Vue2Do.Services
 {
     public class ToDoItemService : IToDoItemService
     {
+        private Dictionary<int, ToDoItemModel> todos;
+
+        private void Initialize()
+        {
+            todos = todos ?? new Dictionary<int, ToDoItemModel>
+            {
+                { 0, new ToDoItemModel { Id = new Guid(), Text = "Fake Test Service ToDo", Completed = true} },
+                { 1, new ToDoItemModel { Id = new Guid(), Text = "Fake Test Service ToDo", Completed = false} },
+            };
+        }
+
         public Task<IEnumerable<ToDoItemModel>> GetItems(string userId)
         {
-            List<ToDoItemModel> todos = new List<ToDoItemModel>
-            {
-                new ToDoItemModel { Text = "Fake Test Service ToDo", Completed = true},
-                new ToDoItemModel { Text = "Fake Test Service ToDo", Completed = false},
-            };
+            Initialize();
 
-            return Task.FromResult(todos.AsEnumerable());
+            return Task.FromResult(todos.Values.AsEnumerable());
         }
 
         public Task AddItem(string userId, string text)
         {
-            throw new NotImplementedException();
+            todos.Add(todos.Max().Key + 1, new ToDoItemModel { Id = new Guid(), Text = text });
+            return Task.CompletedTask;
         }
 
         public Task DeleteItem(string userId, Guid id)
